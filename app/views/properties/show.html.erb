@@ -1,0 +1,71 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Street address:</strong>
+  <%= @property.street_address %>
+</p>
+
+<p>
+  <strong>City:</strong>
+  <%= @property.city %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @property.state %>
+</p>
+
+<p>
+  <strong>Lat:</strong>
+  <%= @property.lat %>
+</p>
+
+<p>
+  <strong>Lon:</strong>
+  <%= @property.lon %>
+</p>
+
+<p>
+  <strong>Url:</strong>
+  <%= @property.url %>
+</p>
+
+<p>
+  <strong>Photo url:</strong>
+  <%= @property.photo_url %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @property.description %>
+</p>
+
+<p>
+  <strong>Tags:</strong>
+  <%= @property.tags %>
+</p>
+
+<p>
+  <strong>Bedroom:</strong>
+  <%= @property.bedroom %>
+</p>
+
+<p>
+  <strong>Bathroom:</strong>
+  <%= @property.bathroom %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @property.price %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @property.status %>
+</p>
+
+
+
+<%= link_to 'Edit', edit_list_property_path(:id => @property.id) %> |
+<%= link_to 'Back', list_properties_path %>

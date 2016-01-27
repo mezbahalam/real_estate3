@@ -1,0 +1,55 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Properties</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Street address</th>
+      <th>City</th>
+      <th>State</th>
+      <th>Lat</th>
+      <th>Lon</th>
+      <th>Url</th>
+      <th>Photo url</th>
+      <th>Description</th>
+      <th>Tags</th>
+      <th>Bedroom</th>
+      <th>Bathroom</th>
+      <th>Price</th>
+      <th>Status</th>
+
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @list.properties.each do |property| %>
+      <tr>
+
+        <td><%= property.street_address %></td>
+        <td><%= property.city %></td>
+        <td><%= property.state %></td>
+        <td><%= property.lat %></td>
+        <td><%= property.lon %></td>
+        <td><%= property.url %></td>
+        <td><%= property.photo_url %></td>
+        <td><%= property.description %></td>
+        <td><%= property.tags %></td>
+        <td><%= property.bedroom %></td>
+        <td><%= property.bathroom %></td>
+        <td><%= property.price %></td>
+        <td><%= property.status %></td>
+
+        <td><%=  link_to "show", list_property_path(:id => property.id) %></td>
+        <td><%=  link_to "Edit", edit_list_property_path(:id => property.id) %></td>
+        <td><%=  link_to "Delete", list_property_path(:id => property.id) ,method: :delete, data: { confirm: "Are you sure?" } %></td>
+
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Property', new_list_property_path %>
