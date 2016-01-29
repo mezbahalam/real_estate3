@@ -42,8 +42,10 @@
         <td><%= property.status %></td>
 
         <td><%=  link_to "show", list_property_path(:id => property.id) %></td>
-        <td><%=  link_to "Edit", edit_list_property_path(:id => property.id) %></td>
-        <td><%=  link_to "Delete", list_property_path(:id => property.id) ,method: :delete, data: { confirm: "Are you sure?" } %></td>
+        <% if current_user.id == @list.owner_id %>
+            <td><%=  link_to "Edit", edit_list_property_path(:id => property.id) %></td>
+            <td><%=  link_to "Delete", list_property_path(:id => property.id) ,method: :delete, data: { confirm: "Are you sure?" } %></td>
+        <% end %>
 
       </tr>
     <% end %>

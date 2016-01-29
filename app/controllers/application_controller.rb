@@ -10,6 +10,14 @@ class ApplicationController < ActionController::Base
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up)  { |u| u.permit(  :email,:password, :password_confirmation ,  :user_name, :first_name, :last_name, :location, :bio ) }
+    devise_parameter_sanitizer.for(:accept_invitation).concat([:first_name, :last_name, :user_name])
   end
+
+
+  private
+
+    def after_invite_path_for(resource)
+      list_path(@list)
+    end
 
 end

@@ -22,6 +22,8 @@ group :development do
   gem 'web-console', '~> 2.0'
   gem 'spring'
   gem 'better_errors'
+  gem 'letter_opener'
+  #gem 'email_spec'
 end
 
 group :production do
@@ -31,5 +33,7 @@ end
 #require gems
 
 gem 'devise'
+gem 'devise_invitable'
 gem 'puma'
 gem 'public_activity'
+gem 'simple_form'

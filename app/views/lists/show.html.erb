@@ -2,6 +2,21 @@
 
 <%= @list.name %>
 
+<h3>invite user</h3>
+<%= simple_form_for(:user, url: invite_list_path,
+                                html: { class: 'mezbahinvite'}) do |f| %>
+    <%= f.input :email, placeholder: 'Email', label: false %>
+    <%= f.button :submit, 'Invite User', class: 'btn-primary' %>
+<% end %>
+<h2><%= @members.size %> Members</h2>
+<% @members.each do |member| %>
+    <ul>
+      <li><%= member.email %></li>
+    </ul>
+<% end %>
 
+
+<% if current_user.id == @list.owner_id %>
 <%= link_to 'Edit', edit_list_path(@list) %> |
+<% end %>
 <%= link_to 'Back', lists_path %>

@@ -1,8 +1,8 @@
 class HomeController < ApplicationController
-
+ before_action :authenticate_user!
   def index
-    @list = List.new
-    @lists = List.all
+
+
   end
 
 end

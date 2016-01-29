@@ -1,5 +1,6 @@
 class PropertiesController < ApplicationController
   before_action :authenticate_user!
+  before_action :authenticate_owner, only: [:edit, :update, :destroy]
   before_action :find_list
 
 
@@ -24,6 +25,7 @@ class PropertiesController < ApplicationController
 
   def create
     @property = @list.properties.new(property_params)
+    @property.owner_id = current_user.id
     respond_to do |format|
       if @property.save
         format.html { redirect_to list_properties_path, notice: 'Property was successfully created.' }
@@ -63,5 +65,10 @@ class PropertiesController < ApplicationController
 
     def property_params
       params.require(:property).permit(:street_address, :city, :state, :lat, :lon, :url, :photo_url, :description, :tags, :bedroom, :bathroom, :price, :status, :list_id)
+    end
+
+    def authenticate_owner
+      @list = List.find(params[:id])
+      redirect_to :root unless current_user.id == @list.owner_id
     end
 end

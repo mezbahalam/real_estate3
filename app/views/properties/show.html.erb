@@ -66,6 +66,7 @@
 </p>
 
 
-
+<% if current_user.id == @list.owner_id %>
 <%= link_to 'Edit', edit_list_property_path(:id => @property.id) %> |
+<% end %>
 <%= link_to 'Back', list_properties_path %>
