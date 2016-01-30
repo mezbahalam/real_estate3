@@ -1,0 +1,7 @@
+
+
+<% if activity.trackable %>
+    updated a property in "<%= link_to activity.trackable.list.name, activity.trackable.list %>"
+<% else %>
+    which has since been removed
+<% end %>

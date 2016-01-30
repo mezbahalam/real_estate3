@@ -7,6 +7,7 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+<%= notice %>
 <div class="well" >
   <% if user_signed_in? %>
       <%= current_user.email %>

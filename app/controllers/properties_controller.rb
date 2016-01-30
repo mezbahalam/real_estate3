@@ -28,6 +28,8 @@ class PropertiesController < ApplicationController
     @property.owner_id = current_user.id
     respond_to do |format|
       if @property.save
+        @property.create_activity :create, owner: current_user
+
         format.html { redirect_to list_properties_path, notice: 'Property was successfully created.' }
       else
         format.html { render :new }
@@ -41,6 +43,8 @@ class PropertiesController < ApplicationController
 
     respond_to do |format|
       if @property.update_attributes(property_params)
+        @property.create_activity :update, owner: current_user
+
         format.html { redirect_to list_properties_path, notice: 'Property was successfully updated.' }
       else
         format.html { render :edit }
@@ -51,8 +55,11 @@ class PropertiesController < ApplicationController
 
   def destroy
     @property = @list.properties.find(params[:id])
-
+    @activity = PublicActivity::Activity.find_by(trackable_id: (params[:id]), trackable_type: controller_path.classify)
+    @activity.destroy
     @property.destroy
+
+
     respond_to do |format|
       format.html { redirect_to list_properties_path, notice: 'Property was successfully destroyed.' }
     end
@@ -68,7 +75,7 @@ class PropertiesController < ApplicationController
     end
 
     def authenticate_owner
-      @list = List.find(params[:id])
+      @list = List.find(params[:list_id])
       redirect_to :root unless current_user.id == @list.owner_id
     end
 end

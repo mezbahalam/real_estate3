@@ -1,15 +1,14 @@
 class ListsController < ApplicationController
   before_action :authenticate_user!
   before_action :authenticate_owner, only: [:edit, :update, :destroy]
-  before_action :set_list, only: [:show, :edit, :update, :destroy]
+  before_action :set_list, only: [:show, :edit, :update]
   # before_filter :restrict_only_invited_users
 
 
   def index
-
-    #@lists = List.all
-
     @lists = current_user.lists.all
+
+    # @lists = List.all
     #@member = User.invitation_accepted
     #@creator = User.created_by_invite
   end
@@ -33,10 +32,14 @@ class ListsController < ApplicationController
         @add_member.user_id =  @list.user_id
         @add_member.list_id = @list.id
         @add_member.save
+        @list.create_activity :create, owner: current_user
+
+
         format.html { redirect_to lists_path, notice: 'List was successfully created.' }
       else
         format.html { render :new }
       end
+
     end
   end
 
@@ -46,6 +49,8 @@ class ListsController < ApplicationController
   def update
     respond_to do |format|
       if @list.update(list_params)
+        @list.create_activity :update, owner: current_user
+
         format.html { redirect_to lists_path, notice: 'List was successfully updated.' }
       else
         format.html { render :edit }
@@ -55,7 +60,11 @@ class ListsController < ApplicationController
 
 
   def destroy
+    @list = current_user.lists.find(params[:id])
+    @activity = PublicActivity::Activity.find_by(trackable_id: (params[:id]), trackable_type: controller_path.classify)
+    @activity.destroy
     @list.destroy
+
     respond_to do |format|
       format.html { redirect_to lists_url, notice: 'List was successfully destroyed.' }
     end
@@ -66,7 +75,6 @@ class ListsController < ApplicationController
   def invite
     # Set the current list
     @list = List.find(params[:id])
-
     @user = User.find_by(email: invite_params[:email])
     # @user is an instance or nil
     if @user && @user.email != current_user.email
@@ -79,7 +87,7 @@ class ListsController < ApplicationController
       # invite! class method returns invitable var, which is a User instance
       #resource_class.invite!(invite_params, current_inviter, &block)
 
-      # Create your own invite_params method to allow name and email
+      # Create your own invite_params method to allow user_name and email
       invited_user = User.invite!(invite_params, current_user)
 
       # If a complex association through a separate memberships table
@@ -117,4 +125,5 @@ class ListsController < ApplicationController
     @list = List.find(params[:id])
     redirect_to :root unless current_user.id == @list.owner_id
   end
+
 end
