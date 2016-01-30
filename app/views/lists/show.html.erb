@@ -20,3 +20,15 @@
 <%= link_to 'Edit', edit_list_path(@list) %> |
 <% end %>
 <%= link_to 'Back', lists_path %>
+
+
+<div class="event">
+  <h1>
+    <%= @list.name %>
+  </h1>
+</div>
+<div class="comments">
+  <h2>Comments</h2>
+  <%= render :partial => 'comments/form', :locals => { :comment => @new_comment } %>
+  <%= render :partial => 'comments/comment', :collection => @comments, :as => :comment %>
+</div>

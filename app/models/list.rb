@@ -1,7 +1,7 @@
 class List < ActiveRecord::Base
   include PublicActivity::Common
   #tracked owner: ->(controller, model) { controller && controller.current_user }
-
+  acts_as_commentable
 
   has_many :properties, dependent: :destroy
 

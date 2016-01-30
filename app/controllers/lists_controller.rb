@@ -15,6 +15,10 @@ class ListsController < ApplicationController
 
   def show
     @members = @list.users
+
+    @list = List.find(params[:id])
+    @comments = @list.comment_threads.order('created_at desc')
+    @new_comment = Comment.build_from(@list, current_user.id, "")
   end
 
   def new

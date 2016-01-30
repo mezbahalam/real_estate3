@@ -1,0 +1,8 @@
+
+<% if activity.trackable %>
+    <%# activity.trackable.commentable.inspect %>
+    added a comment on "<%= link_to( activity.trackable.commentable.name,activity.trackable.commentable ) %>"
+
+<% else %>
+     deleted a comment
+<% end %>
