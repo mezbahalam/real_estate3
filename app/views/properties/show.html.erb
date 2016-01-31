@@ -66,7 +66,19 @@
 </p>
 
 
-<% if current_user.id == @list.owner_id %>
-<%= link_to 'Edit', edit_list_property_path(:id => @property.id) %> |
+<% if current_user.id == @property.owner_id %>
+<%= link_to 'Edit', edit_list_property_path( :list_id => @property.list_id, :id => @property.id) %> |
 <% end %>
-<%= link_to 'Back', list_properties_path %>
+<%= link_to 'Back', list_properties_path(:list_id => @property.list_id) %>
+
+
+<div class="event">
+  <h1>
+    <%= @property.street_address %>
+  </h1>
+</div>
+<div class="comments">
+  <h2>Comments</h2>
+  <%= render :partial => 'comments/form', :locals => { :comment => @new_comment } %>
+  <%= render :partial => 'comments/comment', :collection => @comments, :as => :comment %>
+</div>

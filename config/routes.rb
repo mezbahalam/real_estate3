@@ -12,9 +12,9 @@ Rails.application.routes.draw do
     member do
       post :invite
     end
-    resources :properties
+    resources :properties, except: :show
   end
-
+  resources :properties , only: :show
 
 
 end
