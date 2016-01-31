@@ -6,7 +6,8 @@ class PropertiesController < ApplicationController
 
   def index
     @list = current_user.lists.find(params[:list_id])
-    @property = @list.properties.all
+    @properties = @list.properties.all
+
   end
 
 
@@ -67,9 +68,20 @@ class PropertiesController < ApplicationController
     @activity.destroy
     @property.destroy
 
-
     respond_to do |format|
       format.html { redirect_to list_properties_path(@list), notice: 'Property was successfully destroyed.' }
+    end
+  end
+
+
+  def like
+    @property = Property.find(params[:id])
+    @property.liked_by current_user
+
+    if request.xhr?
+      render json: { count: @property.get_likes.size, id: params[:id] }
+    else
+      redirect_to @property
     end
   end
 

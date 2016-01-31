@@ -40,7 +40,6 @@
         <td><%= property.bathroom %></td>
         <td><%= property.price %></td>
         <td><%= property.status %></td>
-
         <td><%=  link_to "show", property_path(:id => property.id) %></td>
         <% if current_user.id == @list.owner_id %>
             <td><%=  link_to "Edit", edit_list_property_path(:id => property.id) %></td>
@@ -48,10 +47,12 @@
         <% end %>
 
       </tr>
-    <% end %>
+
+
+  <% end %>
   </tbody>
 </table>
 
 <br>
-
+<%= link_to 'Back', list_path(@list) %>
 <%= link_to 'New Property', new_list_property_path %>

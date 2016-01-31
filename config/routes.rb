@@ -16,5 +16,6 @@ Rails.application.routes.draw do
   end
   resources :properties , only: :show
 
-
+  match :like, to: 'likes#create', as: :like, via: :post
+  match :unlike, to: 'likes#destroy', as: :unlike, via: :post
 end

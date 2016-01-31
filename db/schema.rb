@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160130172956) do
+ActiveRecord::Schema.define(version: 20160131162639) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "trackable_id"
@@ -50,11 +50,13 @@ ActiveRecord::Schema.define(version: 20160130172956) do
   create_table "lists", force: :cascade do |t|
     t.string   "name"
     t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.integer  "owner_id"
+    t.integer  "cached_votes_up", default: 0
   end
 
+  add_index "lists", ["cached_votes_up"], name: "index_lists_on_cached_votes_up"
   add_index "lists", ["user_id"], name: "index_lists_on_user_id"
 
   create_table "memberships", force: :cascade do |t|
@@ -81,11 +83,13 @@ ActiveRecord::Schema.define(version: 20160130172956) do
     t.float    "price"
     t.string   "status"
     t.integer  "list_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.integer  "owner_id"
+    t.integer  "cached_votes_up", default: 0
   end
 
+  add_index "properties", ["cached_votes_up"], name: "index_properties_on_cached_votes_up"
   add_index "properties", ["list_id"], name: "index_properties_on_list_id"
 
   create_table "users", force: :cascade do |t|
@@ -126,5 +130,20 @@ ActiveRecord::Schema.define(version: 20160130172956) do
   add_index "users", ["invitations_count"], name: "index_users_on_invitations_count"
   add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id"
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+
+  create_table "votes", force: :cascade do |t|
+    t.integer  "votable_id"
+    t.string   "votable_type"
+    t.integer  "voter_id"
+    t.string   "voter_type"
+    t.boolean  "vote_flag"
+    t.string   "vote_scope"
+    t.integer  "vote_weight"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "votes", ["votable_id", "votable_type", "vote_scope"], name: "index_votes_on_votable_id_and_votable_type_and_vote_scope"
+  add_index "votes", ["voter_id", "voter_type", "vote_scope"], name: "index_votes_on_voter_id_and_voter_type_and_vote_scope"
 
 end
