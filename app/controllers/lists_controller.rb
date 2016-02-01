@@ -48,6 +48,7 @@ class ListsController < ApplicationController
   end
 
   def edit
+    @invite = @list.invites.build
   end
 
   def update

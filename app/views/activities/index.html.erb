@@ -1,12 +1,30 @@
-<h1>All Activities</h1>
 
-<% @activities.each do |activity| %>
-    <div class="activity">
-      <% activity.inspect %>
-      <%# activity.trackable.memberships.ids %>
-      <%# activity.trackable.methods.sort %>
-      <%# activity.owner.methods.sort %>
-      <%= link_to(activity.owner.email, activity.owner) if activity.owner %>
-      <%= render_activity activity %>
-    </div>
-<% end %>
+<div class="container-fluid">
+<div class="row">
+  <div class="col-md-4">
+    <div style="padding: 5px" class="row" ><%= link_to 'Add Property', "#", class:"btn btn-primary" %></div>
+    <div style="padding: 5px" class="row"><%= link_to 'Add List', new_list_path,class:"btn btn-primary"  %></div>
+    <div style="padding: 5px" class="row"><%= link_to 'My Lists', lists_path,class:"btn btn-primary"  %></div>
+    <div style="padding: 5px" class="row"><%= link_to 'Search', '#',class:"btn btn-primary"  %></div>
+  </div>
+  <div class="col-md-8">
+
+    <h1>Latest Activities</h1>
+
+    <% @activities.each do |activity| %>
+        <div class="activity">
+          <% activity.inspect %>
+          <%# activity.trackable.memberships.ids %>
+          <%# activity.trackable.methods.sort %>
+          <%# activity.owner.methods.sort %>
+          <div class="bg-primary" style="padding: 5px">
+            <%= link_to(activity.owner.email, activity.owner  , class: "activity-color" ) if activity.owner%>
+            <p class= "activity-color"><%= render_activity activity  %></p>
+          </div>
+
+        </div>
+    <% end %>
+  </div>
+
+</div>
+</div>

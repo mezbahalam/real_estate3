@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160131162639) do
+ActiveRecord::Schema.define(version: 20160201153131) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "trackable_id"
@@ -47,6 +47,16 @@ ActiveRecord::Schema.define(version: 20160131162639) do
   add_index "comments", ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type"
   add_index "comments", ["user_id"], name: "index_comments_on_user_id"
 
+  create_table "invites", force: :cascade do |t|
+    t.string   "email"
+    t.integer  "list_id"
+    t.integer  "sender_id"
+    t.integer  "recipient_id"
+    t.string   "token"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
   create_table "lists", force: :cascade do |t|
     t.string   "name"
     t.integer  "user_id"
@@ -72,8 +82,8 @@ ActiveRecord::Schema.define(version: 20160131162639) do
     t.string   "street_address"
     t.string   "city"
     t.string   "state"
-    t.float    "lat"
-    t.float    "lon"
+    t.float    "latitude"
+    t.float    "longitude"
     t.string   "url"
     t.string   "photo_url"
     t.text     "description"
@@ -122,6 +132,7 @@ ActiveRecord::Schema.define(version: 20160131162639) do
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
     t.integer  "invitations_count",      default: 0
+    t.string   "invite_token"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true

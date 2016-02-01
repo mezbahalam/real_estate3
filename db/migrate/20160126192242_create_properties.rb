@@ -4,8 +4,8 @@ class CreateProperties < ActiveRecord::Migration
       t.string :street_address
       t.string :city
       t.string :state
-      t.float :lat
-      t.float :lon
+      t.float :latitude
+      t.float :longitude
       t.string :url
       t.string :photo_url
       t.text :description

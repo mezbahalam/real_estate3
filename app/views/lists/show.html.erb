@@ -4,11 +4,17 @@
 <h3><%= link_to  @list.name, list_properties_path(@list) %></h3>
 
 <h3>invite user</h3>
-<%= simple_form_for(:user, url: invite_list_path,
+<%# simple_form_for(:user, url: invite_list_path,
                                 html: { class: 'mezbahinvite'}) do |f| %>
-    <%= f.input :email, placeholder: 'Email', label: false %>
-    <%= f.button :submit, 'Invite User', class: 'btn-primary' %>
-<% end %>
+    <%# f.input :email, placeholder: 'Email', label: false %>
+    <%# f.button :submit, 'Invite User', class: 'btn-primary' %>
+<%# end %>
+
+
+
+
+
+
 <h2><%= @members.size %> Members</h2>
 <% @members.each do |member| %>
     <ul>

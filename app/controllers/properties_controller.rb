@@ -7,7 +7,15 @@ class PropertiesController < ApplicationController
   def index
     @list = current_user.lists.find(params[:list_id])
     @properties = @list.properties.all
-
+    @hash = Gmaps4rails.build_markers(@properties) do |user, marker|
+      marker.lat user.latitude
+      marker.lng user.longitude
+    #   marker.picture({
+    #                      :url => "http://www.spainbuyingguide.com/_assets/media/library/SP-mortgage.png",
+    #                      :width => 32,
+    #                      :height => 32
+    #                  })
+    end
   end
 
 

@@ -4,6 +4,7 @@
 
 
 .activity {
+  width: 60%;
   border-bottom: solid 1px #CCC;
   pandding: 16px 0;
   em {
@@ -11,4 +12,12 @@
     font-size: 12px;
     padding-left: 5px;
   }
+}
+
+.activity-color{
+  color: #000000;
+}
+.activity-color a{
+  color: #000000;
+  font-style: italic;
 }

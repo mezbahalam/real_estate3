@@ -8,6 +8,7 @@ class List < ActiveRecord::Base
 
   has_many :memberships
   has_many :users, :through => :memberships   #, :class_name => "User"
+  has_many :invites
   validates_presence_of :name
 
 
