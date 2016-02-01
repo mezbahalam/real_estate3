@@ -12,6 +12,13 @@
 
 
 
+<%= form_for @invite , :url => invites_path do |f| %>
+    <%= f.hidden_field :list_id, :value => @invite.list_id %>
+    <%= f.label :email %>
+    <%= f.email_field :email %>
+    <%= f.submit 'Send Invite', class: 'btn-primary' %>
+<% end %>
+
 
 
 

@@ -14,6 +14,7 @@ class ListsController < ApplicationController
   end
 
   def show
+    @invite = @list.invites.build
     @members = @list.users
 
     @list = List.find(params[:id])

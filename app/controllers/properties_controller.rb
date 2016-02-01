@@ -5,7 +5,10 @@ class PropertiesController < ApplicationController
 
 
   def index
+
+
     @list = current_user.lists.find(params[:list_id])
+    @invite = @list.invites.build
     @properties = @list.properties.all
     @hash = Gmaps4rails.build_markers(@properties) do |user, marker|
       marker.lat user.latitude

@@ -5,6 +5,16 @@
 
 <p id="notice"><%= notice %></p>
 
+
+<%= form_for @invite , :url => invites_path do |f| %>
+    <%= f.hidden_field :list_id, :value => @invite.list_id %>
+    <%= f.label :email %>
+    <%= f.email_field :email %>
+    <%= f.submit 'Send Invite', class: 'btn-primary' %>
+<% end %>
+
+<% if @properties.present? %>
+
 <h1>All Properties</h1>
 <div style='width: 800px;'>
   <div id="map" style='width: 800px; height: 400px;'></div>
@@ -18,6 +28,8 @@
         handler.fitMapToBounds();
     });
 </script>
+
+<% end %>
 <table>
 
 
