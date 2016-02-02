@@ -2,16 +2,21 @@ Rails.application.routes.draw do
 
 
 
-  root to: "lists#index"
+  root to: "activities#index"
   resources :comments, :only => [:create, :destroy]
   resources :activities
   devise_for :users, :controllers => { registrations: 'users/registrations' }
   resources :users
-
   resources :lists do
-    resources :properties, except: :show
+    member do
+      post 'add_property'
+    end
   end
-  resources :properties , only: :show
+  resources :properties do
+    member do
+     post 'add_to_list'
+    end
+  end
   resources :invites
 
   match :like, to: 'likes#create', as: :like, via: :post

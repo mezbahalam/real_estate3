@@ -4,10 +4,13 @@ class List < ActiveRecord::Base
   acts_as_commentable
   acts_as_votable
 
-  has_many :properties, dependent: :destroy
 
   has_many :memberships
   has_many :users, :through => :memberships   #, :class_name => "User"
+
+  has_many :propertyships
+  has_many :properties, :through => :propertyships
+
   has_many :invites
   validates_presence_of :name
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160201153131) do
+ActiveRecord::Schema.define(version: 20160202092944) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "trackable_id"
@@ -64,10 +64,16 @@ ActiveRecord::Schema.define(version: 20160201153131) do
     t.datetime "updated_at",                  null: false
     t.integer  "owner_id"
     t.integer  "cached_votes_up", default: 0
+    t.integer  "property_id"
   end
 
   add_index "lists", ["cached_votes_up"], name: "index_lists_on_cached_votes_up"
   add_index "lists", ["user_id"], name: "index_lists_on_user_id"
+
+  create_table "lists_properties", id: false, force: :cascade do |t|
+    t.integer "property_id"
+    t.integer "list_id"
+  end
 
   create_table "memberships", force: :cascade do |t|
     t.integer  "user_id"
@@ -101,6 +107,15 @@ ActiveRecord::Schema.define(version: 20160201153131) do
 
   add_index "properties", ["cached_votes_up"], name: "index_properties_on_cached_votes_up"
   add_index "properties", ["list_id"], name: "index_properties_on_list_id"
+
+  create_table "propertyships", force: :cascade do |t|
+    t.integer  "property_id"
+    t.integer  "list_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "propertyships", ["list_id", "property_id"], name: "index_propertyships_on_list_id_and_property_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "user_name"

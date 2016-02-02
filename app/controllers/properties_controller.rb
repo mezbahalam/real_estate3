@@ -1,12 +1,10 @@
 class PropertiesController < ApplicationController
   before_action :authenticate_user!
   before_action :authenticate_owner, only: [:edit, :update, :destroy]
-  before_action :find_list, only: [:edit, :update, :destroy]
+  #before_action :find_list, only: [:edit, :update, :destroy]
 
 
   def index
-
-
     @list = current_user.lists.find(params[:list_id])
     @invite = @list.invites.build
     @properties = @list.properties.all
@@ -24,14 +22,17 @@ class PropertiesController < ApplicationController
 
   def show
     @property = Property.find(params[:id])
+
     @comments = @property.comment_threads.order('created_at desc')
     @new_comment = Comment.build_from(@property, current_user.id, "")
+
+
   end
 
 
   def new
-    @list = List.find(params[:list_id])
-    @property = @list.properties.new
+
+    @property = Property.new
   end
 
 
@@ -40,14 +41,13 @@ class PropertiesController < ApplicationController
 
 
   def create
-    @list = List.find(params[:list_id])
-    @property = @list.properties.new(property_params)
+    @property = Property.new(property_params)
     @property.owner_id = current_user.id
     respond_to do |format|
       if @property.save
         @property.create_activity :create, owner: current_user
 
-        format.html { redirect_to list_properties_path, notice: 'Property was successfully created.' }
+        format.html { redirect_to property_path(@property), notice: 'Property was successfully created.' }
       else
         format.html { render :new }
       end
@@ -56,12 +56,12 @@ class PropertiesController < ApplicationController
 
 
   def update
-    @property = @list.properties.find(params[:id])
+    @property = Property.find(params[:id])
     respond_to do |format|
       if @property.update_attributes(property_params)
-        @property.create_activity :update, owner: current_user
+         @property.create_activity :update, owner: current_user
 
-        format.html { redirect_to list_properties_path(@list), notice: 'Property was successfully updated.' }
+        format.html { redirect_to property_path(@property), notice: 'Property was successfully updated.' }
       else
         format.html { render :edit }
       end
@@ -96,21 +96,36 @@ class PropertiesController < ApplicationController
     end
   end
 
-  private
-    def find_list
 
-      @property = Property.find(params[:id])
-      @property_list = @property.list_id
-      @list = List.find(@property_list)
 
-      #@set_property = Property.find(params[:id])
-      # @property_list = @set_property.list_id
-      # @list = List.find(@property_list)
-      # @list.users
+  def add_to_list
+    @property = Property.find(params[:id])
+    respond_to do |format|
+      if @property.update_attributes(property_params)
+        @property.create_activity :add_to_list, owner: current_user
+
+        format.html { redirect_to property_path(@property), notice: 'Property Added' }
+      else
+        format.html { redirect_to property_path(@property), notice: 'Property Not Added' }
+      end
     end
+  end
+
+  private
+    # def find_list
+    #
+    #   @property = Property.find(params[:id])
+    #   @property_list = @property.list_id
+    #   @list = List.find(@property_list)
+    #
+    #   #@set_property = Property.find(params[:id])
+    #   # @property_list = @set_property.list_id
+    #   # @list = List.find(@property_list)
+    #   # @list.users
+    # end
 
     def property_params
-      params.require(:property).permit(:street_address, :city, :state, :lat, :lon, :url, :photo_url, :description, :tags, :bedroom, :bathroom, :price, :status, :list_id)
+      params.require(:property).permit(:street_address, :city, :state, :lat, :lon, :url, :photo_url, :description, :tags, :bedroom, :bathroom, :price, :status, :list_ids => [])
     end
 
     def authenticate_owner

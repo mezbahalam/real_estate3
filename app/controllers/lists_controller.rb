@@ -17,7 +17,19 @@ class ListsController < ApplicationController
     @invite = @list.invites.build
     @members = @list.users
 
+    @user_all_properties = Property.order("created_at desc").where(:owner_id => current_user.id)
     @list = List.find(params[:id])
+    @properties = @list.properties
+    @hash = Gmaps4rails.build_markers(@properties) do |user, marker|
+      marker.lat user.latitude
+      marker.lng user.longitude
+      #   marker.picture({
+      #                      :url => "http://www.spainbuyingguide.com/_assets/media/library/SP-mortgage.png",
+      #                      :width => 32,
+      #                      :height => 32
+      #                  })
+
+    end
     @comments = @list.comment_threads.order('created_at desc')
     @new_comment = Comment.build_from(@list, current_user.id, "")
   end
@@ -77,31 +89,47 @@ class ListsController < ApplicationController
   end
 
 
+  #
+  # def invite
+  #   # Set the current list
+  #   @list = List.find(params[:id])
+  #   @user = User.find_by(email: invite_params[:email])
+  #   # @user is an instance or nil
+  #   if @user && @user.email != current_user.email
+  #     # invite! instance method returns a Mail::Message instance
+  #     @user.invite!(current_user)
+  #     # return the user instance to match expected return type
+  #     @user
+  #     @user.lists << @list
+  #   else
+  #     # invite! class method returns invitable var, which is a User instance
+  #     #resource_class.invite!(invite_params, current_inviter, &block)
+  #
+  #     # Create your own invite_params method to allow user_name and email
+  #     invited_user = User.invite!(invite_params, current_user)
+  #
+  #     # If a complex association through a separate memberships table
+  #     invited_user.lists << @list
+  #   end
+  # 
+  #   redirect_to list_path
+  # end
 
-  def invite
-    # Set the current list
+
+  def add_property
     @list = List.find(params[:id])
-    @user = User.find_by(email: invite_params[:email])
-    # @user is an instance or nil
-    if @user && @user.email != current_user.email
-      # invite! instance method returns a Mail::Message instance
-      @user.invite!(current_user)
-      # return the user instance to match expected return type
-      @user
-      @user.lists << @list
-    else
-      # invite! class method returns invitable var, which is a User instance
-      #resource_class.invite!(invite_params, current_inviter, &block)
+    respond_to do |format|
+      if @list.update_attributes(list_params)
+        @list.create_activity :add_property, owner: current_user
 
-      # Create your own invite_params method to allow user_name and email
-      invited_user = User.invite!(invite_params, current_user)
-
-      # If a complex association through a separate memberships table
-      invited_user.lists << @list
+        format.html { redirect_to list_path(@list), notice: 'Property Added' }
+      else
+        format.html { redirect_to list_path(@list), notice: 'Property Not Added' }
+      end
     end
-
-    redirect_to list_path
   end
+
+
 
 
   private
@@ -111,7 +139,7 @@ class ListsController < ApplicationController
   end
 
   def list_params
-    params.require(:list).permit(:name, :user_id)
+    params.require(:list).permit(:name, :user_id, property_ids: [])
   end
 
   def invite_params

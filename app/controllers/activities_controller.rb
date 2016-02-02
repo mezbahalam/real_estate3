@@ -1,4 +1,7 @@
 class ActivitiesController < ApplicationController
+  before_action :authenticate_user!
+
+
   def index
     #for last activity of current_user
     #@list = current_user.memberships.last.list

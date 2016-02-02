@@ -2,29 +2,24 @@
 <h1><%= link_to "All activities", activities_path %></h1>
 
 <h1>My Lists</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
+<div class="row">
+  <div class="col-md-4">
     <% @lists.each do |list| %>
-      <tr>
-        <td><%= link_to  list.name, list_properties_path(list) %></td>
-        <td><%=  link_to "show", list_path(:id => list.id) %></td>
-        <% if current_user.id == list.owner_id %>
-            <td><%= link_to 'Edit', edit_list_path(list) %></td>
-            <td><%= link_to 'Destroy', list, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% end %>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
 
+
+        <div class="bg-primary" style="padding: 10px; font-family: bold; color: black "> <%= link_to  list.name, list_path(list) %> </div>
+        <div class="bg-info">
+        <%=  link_to "show", list_path(:id => list.id) %>
+        <% if current_user.id == list.owner_id %>
+            <%= link_to 'Edit', edit_list_path(list) %>
+            <%= link_to 'Destroy', list_path(list), method: :delete, data: { confirm: 'Are you sure?' } %>
+        <% end %>
+        </div>
+        <br>
+
+    <% end %>
+</div>
+</div>
 <br>
 
 <%= link_to 'New List', new_list_path %>

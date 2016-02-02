@@ -58,9 +58,24 @@
 
 
 <% if current_user.id == @property.owner_id %>
-<%= link_to 'Edit', edit_list_property_path( :list_id => @property.list_id, :id => @property.id) %> |
+<%= link_to 'Edit', edit_property_path(  :id => @property.id) %> |
 <% end %>
-<%= link_to 'Back', list_properties_path(:list_id => @property.list_id) %>
+<%# link_to 'Back', "#" %>
+<h5>This Porperty added to lists</h5>
+<% @property.lists.each do |f| %>
+    <ul>
+      <li><%= f.name %></li>
+    </ul>
+<% end %>
+<br>
+<br>
+<br>
+
+<h5>Add to lists</h5>
+<%= form_for(@property, url: add_to_list_property_path,  :method => :POST) do |f| %>
+    <%= f.collection_check_boxes(:list_ids, List.all, :id, :name) %>
+    <%= f.submit  "Add to list"%>
+<% end %>
 
 
 <div class="event">

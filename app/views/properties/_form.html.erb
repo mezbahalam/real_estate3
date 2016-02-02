@@ -1,71 +1,59 @@
-<%= form_for([@list, @property]) do |f| %>
+<!-- google maps -->
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 
-  <% if @property.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@property.errors.count, "error") %> prohibited this property from being saved:</h2>
+<!-- jquery -->
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 
-      <ul>
-      <% @property.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+<!-- jquery UI -->
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+<script type="text/javascript" src="gmaps.js"></script>
 
-  <div class="field">
-    <%= f.label :street_address %><br>
-    <%= f.text_field :street_address %>
-  </div>
-  <div class="field">
-    <%= f.label :city %><br>
-    <%= f.text_field :city %>
-  </div>
-  <div class="field">
-    <%= f.label :state %><br>
-    <%= f.text_field :state %>
-  </div>
-  <div class="field">
-    <%= f.label :latitude %><br>
-    <%= f.number_field :latitude %>
-  </div>
-  <div class="field">
-    <%= f.label :longitude %><br>
-    <%= f.number_field :longitude %>
-  </div>
-  <div class="field">
-    <%= f.label :url %><br>
-    <%= f.text_field :url %>
-  </div>
-  <div class="field">
-    <%= f.label :photo_url %><br>
-    <%= f.text_field :photo_url %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_area :description %>
-  </div>
-  <div class="field">
-    <%= f.label :tags %><br>
-    <%= f.text_field :tags %>
-  </div>
-  <div class="field">
-    <%= f.label :bedroom %><br>
-    <%= f.number_field :bedroom %>
-  </div>
-  <div class="field">
-    <%= f.label :bathroom %><br>
-    <%= f.number_field :bathroom %>
-  </div>
-  <div class="field">
-    <%= f.label :price %><br>
-    <%= f.text_field :price %>
-  </div>
-  <div class="field">
-    <%= f.label :status %><br>
-    <%= f.text_field :status %>
-  </div>
+<script  type="text/javascript" >
 
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    jQuery(function() {
+        var completer;
+
+        completer = new GmapsCompleter({
+            inputField: '#gmaps-input-address',
+            errorField: '#gmaps-error'
+        });
+
+        completer.autoCompleteInit({
+            country: "us"
+        });
+    });
+
+</script>
+<div class="container ">
+
+<div style="width: 30%" >
+
+<%= simple_form_for @property, :html => { :multipart => true } do |f| %>
+
+
+    <%= f.input :street_address, :input_html =>{:id => 'gmaps-input-address'}, :placeholder => 'Street Address...' %>
+    <div id='gmaps-error'></div>
+
+    <%# f.association :lists, as: :check_boxes %>
+    <%= f.input :status, :collection => [ "Not For Sale", "For Sale", "For Rent"],:selected => "Not For Sale" %>
+
+
+    <%= f.input :city,  as: :hidden %>
+    <%= f.input :state, as: :hidden  %>
+    <%= f.input :latitude,  as: :hidden  %>
+    <%= f.input :longitude,  as: :hidden %>
+    <%= f.input :url,:placeholder => "Property Url" %>
+    <%= f.input :photo_url,:placeholder => "Photo" %>
+    <%= f.input :bedroom ,:placeholder => "Beds" %>
+    <%= f.input :bathroom , :placeholder => "Baths" %>
+    <%= f.input :price, :placeholder => "Add Price" %>
+
+    <%= f.input :description,:placeholder => "Description" %>
+    <%= f.input :tags,:placeholder => "Tags" %>
+
+    <%= f.button :submit, "Create" %>
 <% end %>
+
+
+</div>
+</div>

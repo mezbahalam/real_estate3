@@ -1,7 +1,8 @@
 
 
 <% if activity.trackable %>
-    added a List   "<%= link_to(activity.trackable.name, activity.trackable) %>"
+
+    added a  "<%= link_to(activity.trackable_type, activity.trackable) %>" to list
 
 <% else %>
     which has since been deleted
