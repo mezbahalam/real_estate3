@@ -6,9 +6,9 @@ class UsersController < ApplicationController
 
 
   def show
-    @activities = PublicActivity::Activity.where(owner: current_user).order(created_at: :desc).paginate(page: params[:page], per_page: 10)
-    @properties = Property.where(owner_id: current_user.id)
-    @lists = List.where(owner_id: current_user.id)
+    @activities = PublicActivity::Activity.where(owner: current_user).order(created_at: :desc).page(params[:page]).per_page(7)
+    @properties = Property.where(owner_id: current_user.id).page(params[:page]).per_page(7)
+    @lists = List.where(owner_id: current_user.id).page(params[:page]).per_page(7)
   end
 
   def edit

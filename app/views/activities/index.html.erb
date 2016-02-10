@@ -22,7 +22,7 @@
     <% @activities.each do |activity| %>
         <div class="activity">
           <div class="bg-primary" style="padding: 10px">
-            <h4><%= link_to(activity.owner.first_name , activity.owner  , class: "activity-color" ) if activity.owner%>
+            <h4><%= link_to( "@#{activity.owner.first_name}" , activity.owner  , class: "activity-color" ) if activity.owner%>
             <p class= "activity-color"><%= render_activity activity  %></p></h4>
           </div>
         </div>
