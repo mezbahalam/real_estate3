@@ -5,66 +5,34 @@
 
 <p id="notice"><%= notice %></p>
 
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3"></div>
+    <div class="col-md-4">
+<h1>My Properties</h1>
 
-<%# form_for @invite , :url => invites_path do |f| %>
-    <%# f.hidden_field :list_id, :value => @invite.list_id %>
-    <%# f.label :email %>
-    <%# f.email_field :email %>
-    <%# f.submit 'Send Invite', class: 'btn-primary' %>
-<%# end %>
+      <% @properties.each do |property| %>
+          <div class="bg-primary" style="padding: 20px; font-family: bold; color: black ">
+            <p class= "bg-primary">
+              <%= property.photo_url  %>
+              <%= link_to property.street_address,property_path(id: property.id), class:  "bg-primary" %>
+            </p>
+          </div>
+          <%=  link_to "show", property_path(:id => property.id) %>
+          <%=  link_to "Edit", edit_property_path(:id => property.id) %>
+          <%=  link_to "Delete", property_path(:id => property.id) ,method: :delete, data: { confirm: "Are you sure?" } %>
+          <br>
 
-<% if @properties.present? %>
+    <% end %>
 
-<h1>All Properties</h1>
-<div style='width: 800px;'>
-  <div id="map" style='width: 800px; height: 400px;'></div>
-</div>
-
-<script type = "text/javascript">
-    handler = Gmaps.build('Google');
-    handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
-        markers = handler.addMarkers(<%=raw @hash.to_json %>);
-        handler.bounds.extendWith(markers);
-        handler.fitMapToBounds();
-    });
-</script>
-
-<% end %>
-<table>
-
-
-  <tbody>
-    <% @properties.each do |property| %>
-      <tr>
-
-        <td><%= property.street_address %></td>
-        <td><%= property.city %></td>
-        <td><%= property.state %></td>
-        <td><%= property.url %></td>
-        <td><%= property.photo_url %></td>
-        <td><%= property.description %></td>
-        <td><%= property.tags %></td>
-        <td><%= property.bedroom %></td>
-        <td><%= property.bathroom %></td>
-        <td><%= property.price %></td>
-        <td><%= property.status %></td>
-        <td><%=  link_to "show", property_path(:id => property.id) %></td>
-        <% if current_user.id == @property.owner_id %>
-            <td><%=  link_to "Edit", edit_property_path(:id => property.id) %></td>
-            <td><%=  link_to "Delete", property_path(:id => property.id) ,method: :delete, data: { confirm: "Are you sure?" } %></td>
-        <% end %>
-
-      </tr>
-
-
-  <% end %>
-  </tbody>
-</table>
-
+      <%= will_paginate @collection, renderer: BootstrapPagination::Rails %>
 <br>
 <%= link_to 'Back', lists_path %>
 <%= link_to 'New Property', new_property_path %>
 
 
-
+</div>
+</div>
+</div>
+</div>
 

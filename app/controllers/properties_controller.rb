@@ -1,27 +1,28 @@
 class PropertiesController < ApplicationController
   before_action :authenticate_user!
   before_action :authenticate_owner, only: [:edit, :update, :destroy]
-  #before_action :find_list, only: [:edit, :update, :destroy]
 
 
   def index
-    @list = current_user.lists.find(params[:list_id])
-    @invite = @list.invites.build
-    @properties = @list.properties.all
-    @hash = Gmaps4rails.build_markers(@properties) do |user, marker|
-      marker.lat user.latitude
-      marker.lng user.longitude
-    #   marker.picture({
-    #                      :url => "http://www.spainbuyingguide.com/_assets/media/library/SP-mortgage.png",
-    #                      :width => 32,
-    #                      :height => 32
-    #                  })
-    end
+    @properties = Property.where(owner_id: current_user.id).page(params[:page]).per_page(10)
   end
 
 
   def show
+    @current_user_lists = current_user.lists
     @property = Property.find(params[:id])
+
+    @hash = Gmaps4rails.build_markers(@property) do |user, marker|
+      marker.lat user.latitude
+      marker.lng user.longitude
+      #   marker.picture({
+      #                      :url => "http://www.spainbuyingguide.com/_assets/media/library/SP-mortgage.png",
+      #                      :width => 32,
+      #                      :height => 32
+      #                  })
+
+    end
+
 
     @comments = @property.comment_threads.order('created_at desc')
     @new_comment = Comment.build_from(@property, current_user.id, "")
@@ -70,10 +71,7 @@ class PropertiesController < ApplicationController
 
 
   def destroy
-    # @property = Property.find(params[:id])
-    #
-    # @property_list = @property.list_id
-    # @list = List.find(@property_list)
+
 
     @activity = PublicActivity::Activity.find_by(trackable_id: (params[:id]), trackable_type: controller_path.classify)
     @activity.destroy
@@ -112,20 +110,9 @@ class PropertiesController < ApplicationController
   end
 
   private
-    # def find_list
-    #
-    #   @property = Property.find(params[:id])
-    #   @property_list = @property.list_id
-    #   @list = List.find(@property_list)
-    #
-    #   #@set_property = Property.find(params[:id])
-    #   # @property_list = @set_property.list_id
-    #   # @list = List.find(@property_list)
-    #   # @list.users
-    # end
 
     def property_params
-      params.require(:property).permit(:street_address, :city, :state, :lat, :lon, :url, :photo_url, :description, :tags, :bedroom, :bathroom, :price, :status, :list_ids => [])
+      params.require(:property).permit(:street_address, :city, :state, :lat, :lon, :url, :photo_url, :description, :tags, :bedroom, :bathroom, :price, :status,:remote_photo_url_url, :list_ids => [])
     end
 
     def authenticate_owner

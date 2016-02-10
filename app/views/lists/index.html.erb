@@ -1,13 +1,34 @@
 <p id="notice"><%= notice %></p>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3"></div>
+    <div class="col-md-4">
+
+<script type="text/javascript"  >
+    jQuery(function() {
+        return $('#search').autocomplete({
+            source: "/search_suggestions"
+        });
+    });
+</script>
+
+<%= form_tag lists_path ,:method => :get do %>
+          <div class="row">
+    <%= text_field_tag :search, params[:search], :autocomplete => 'on',style: "width: 60%" %>
+    <%= submit_tag "search", class: "btn btn-info" %>
+  </div>
+
+<% end %>
+
 <h1><%= link_to "All activities", activities_path %></h1>
 
 <h1>My Lists</h1>
-<div class="row">
-  <div class="col-md-4">
+
     <% @lists.each do |list| %>
 
 
-        <div class="bg-primary" style="padding: 10px; font-family: bold; color: black "> <%= link_to  list.name, list_path(list) %> </div>
+        <div class="bg-primary" style="padding: 10px; font-family: bold; color: black "> <%= link_to  list.name, list_path(list), class:  "bg-primary" %> </div>
         <div class="bg-info">
         <%=  link_to "show", list_path(:id => list.id) %>
         <% if current_user.id == list.owner_id %>
@@ -18,8 +39,11 @@
         <br>
 
     <% end %>
-</div>
-</div>
+      <%= will_paginate @collection, renderer: BootstrapPagination::Rails %>
 <br>
 
-<%= link_to 'New List', new_list_path %>
+<%= link_to 'New List', new_list_path, class: "btn btn-primary" %>
+</div>
+</div>
+</div>
+</div>

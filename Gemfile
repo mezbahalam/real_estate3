@@ -15,6 +15,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 group :development, :test do
   gem 'byebug'
+  gem 'quiet_assets'
 end
 
 group :development do
@@ -23,7 +24,8 @@ group :development do
   gem 'spring'
   gem 'better_errors'
   gem 'letter_opener'
-  #gem 'email_spec'
+  gem 'sunspot_solr'
+  gem 'rack-mini-profiler' #for time
 end
 
 group :production do
@@ -44,3 +46,8 @@ gem 'geocoder'
 gem 'gmaps4rails'
 gem 'jquery-ui-rails'
 gem 'gmaps-autocomplete-rails'
+gem 'sunspot_rails'
+gem 'acts_as_follower'
+gem 'carrierwave'
+gem 'mini_magick'
+gem 'will_paginate-bootstrap'

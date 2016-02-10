@@ -1,4 +1,5 @@
 class Property < ActiveRecord::Base
+  mount_uploader :photo_url, ImageUploader
   include PublicActivity::Common
 
   has_many :propertyships

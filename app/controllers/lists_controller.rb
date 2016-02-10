@@ -1,23 +1,18 @@
 class ListsController < ApplicationController
   before_action :authenticate_user!
-  before_action :authenticate_owner, only: [:edit, :update, :destroy]
+  before_action :authenticate_member, only: :show
   before_action :set_list, only: [:show, :edit, :update]
-  # before_filter :restrict_only_invited_users
-
 
   def index
-    @lists = current_user.lists.all
-
-    # @lists = List.all
-    #@member = User.invitation_accepted
-    #@creator = User.created_by_invite
+    @lists = current_user.lists.page(params[:page]).per_page(10)
   end
 
   def show
     @invite = @list.invites.build
-    @members = @list.users
+    @members = @list.user_ids
+    @property_in_system = Property.where(:owner_id => current_user.id)
 
-    @user_all_properties = Property.order("created_at desc").where(:owner_id => current_user.id)
+    @user_all_properties = Property.order("created_at desc").where(:owner_id => @members)
     @list = List.find(params[:id])
     @properties = @list.properties
     @hash = Gmaps4rails.build_markers(@properties) do |user, marker|
@@ -89,43 +84,24 @@ class ListsController < ApplicationController
   end
 
 
-  #
-  # def invite
-  #   # Set the current list
-  #   @list = List.find(params[:id])
-  #   @user = User.find_by(email: invite_params[:email])
-  #   # @user is an instance or nil
-  #   if @user && @user.email != current_user.email
-  #     # invite! instance method returns a Mail::Message instance
-  #     @user.invite!(current_user)
-  #     # return the user instance to match expected return type
-  #     @user
-  #     @user.lists << @list
-  #   else
-  #     # invite! class method returns invitable var, which is a User instance
-  #     #resource_class.invite!(invite_params, current_inviter, &block)
-  #
-  #     # Create your own invite_params method to allow user_name and email
-  #     invited_user = User.invite!(invite_params, current_user)
-  #
-  #     # If a complex association through a separate memberships table
-  #     invited_user.lists << @list
-  #   end
-  # 
-  #   redirect_to list_path
-  # end
-
-
   def add_property
     @list = List.find(params[:id])
-    respond_to do |format|
-      if @list.update_attributes(list_params)
-        @list.create_activity :add_property, owner: current_user
+    @members = @list.user_ids
+    @mee = current_user.id
 
-        format.html { redirect_to list_path(@list), notice: 'Property Added' }
-      else
-        format.html { redirect_to list_path(@list), notice: 'Property Not Added' }
+    if @mee.in?(@members)
+      respond_to do |format|
+        if  @list.update(list_params)
+          @list.save
+          @list.create_activity :add_property, owner: current_user
+
+          format.html { redirect_to list_path(@list), notice: 'Property Added' }
+        else
+          format.html { redirect_to list_path(@list), notice: 'Property Not Added' }
+        end
       end
+    else
+      redirect_to :root
     end
   end
 
@@ -146,14 +122,12 @@ class ListsController < ApplicationController
     params.require(:user).permit( :email, :name, :user_id, :list_id)
   end
 
-
-
-
-  # def restrict_only_invited_users
-  #   redirect_to :root if current_user.invitation_accepted_at.blank?
-  # end
-
-  #authenticate_member!
+  def authenticate_member
+    @list = List.find(params[:id])
+    @members = @list.user_ids
+    @mee = current_user.id
+    redirect_to :root unless @mee.in?(@members)
+  end
 
   def authenticate_owner
     @list = List.find(params[:id])

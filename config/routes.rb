@@ -2,15 +2,21 @@ Rails.application.routes.draw do
 
 
 
+  resources :search_suggestions
   root to: "activities#index"
   resources :comments, :only => [:create, :destroy]
   resources :activities
   devise_for :users, :controllers => { registrations: 'users/registrations' }
-  resources :users
+  resources :users do
+    resources :follows, :only => [:create, :destroy]
+  end
   resources :lists do
     member do
-      post 'add_property'
+      put 'add_property'
     end
+    # collection do
+    #   get 'search'
+    # end
   end
   resources :properties do
     member do

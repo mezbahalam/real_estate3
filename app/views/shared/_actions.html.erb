@@ -1,9 +1,5 @@
+<div class="row"  style="margin-right: 90%">
 <% if user_signed_in? %>
-  <div class="actions">
-    <div class="row">
-      <div class="col-xs-6 like">
-        <%= render 'likes/form', likeable: resource %>
-      </div>
-    </div>
-  </div>
+    <%= render 'likes/form', likeable: resource %>
 <% end %>
+</div>

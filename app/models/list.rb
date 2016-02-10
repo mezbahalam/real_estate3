@@ -15,6 +15,28 @@ class List < ActiveRecord::Base
   validates_presence_of :name
 
 
+  # def self.search(term)
+  #   where("name like :term", term: "%#{term}%")
+  # end
+
+
+
+  # searchable do
+  #   text :name
+  # end
+
+
+  # def self.terms_for(prefix)
+  #   suggestions = where("term like ?", "#{prefix}_%")
+  #   suggestions.order("created_at asc").limit(10).map(&:term)
+  # end
+  #
+  # def self.index_lists
+  #   List.find_each do |list|
+  #     index_term(list.name)
+  #   end
+  # end
+
   # before_destroy method overrides the default ruby destroy method that is called during dependent: :destroy
   # before_destroy :find_and_destroy_lists
   #

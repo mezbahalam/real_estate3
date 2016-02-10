@@ -9,11 +9,16 @@
 </head>
 <body>
 <%= notice %>
-<div class="well" >
-  <% if user_signed_in? %>
-      <%= current_user.email %>
-      <%= link_to "sign out",destroy_user_session_path, method: :delete   %>
-  <% end %>
+<div class="well">
+  <div class="row"  >
+    <div class="container-fluid pull-right" >
+      <% if user_signed_in? %>
+          <%= current_user.email %>
+          <%= link_to "sign out",destroy_user_session_path, method: :delete, class: "btn btn-danger btn-lg custom-button"   %>
+      <% end %>
+    </div>
+  </div>
+
 
   <%= yield %>
 </div>

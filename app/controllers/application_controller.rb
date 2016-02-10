@@ -6,17 +6,11 @@ class ApplicationController < ActionController::Base
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
-  # def current_user
-  #   @current_user ||= User.find(session[:user_id]) if session[:user_id]
-  # end
-  #
-  # helper_method :current_user
-  # hide_action :current_user
 
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up)  { |u| u.permit(  :email,:password, :password_confirmation ,  :user_name, :first_name, :last_name, :location, :bio, :invite_token) }
+    devise_parameter_sanitizer.for(:sign_up) <<  [:email,:password, :password_confirmation ,  :user_name, :first_name, :last_name, :location, :bio, :invite_token]
     devise_parameter_sanitizer.for(:accept_invitation).concat([:first_name, :last_name, :user_name])
   end
 

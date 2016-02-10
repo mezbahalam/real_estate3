@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160202092944) do
+ActiveRecord::Schema.define(version: 20160209072750) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "trackable_id"
@@ -46,6 +46,19 @@ ActiveRecord::Schema.define(version: 20160202092944) do
 
   add_index "comments", ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type"
   add_index "comments", ["user_id"], name: "index_comments_on_user_id"
+
+  create_table "follows", force: :cascade do |t|
+    t.integer  "followable_id",                   null: false
+    t.string   "followable_type",                 null: false
+    t.integer  "follower_id",                     null: false
+    t.string   "follower_type",                   null: false
+    t.boolean  "blocked",         default: false, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "follows", ["followable_id", "followable_type"], name: "fk_followables"
+  add_index "follows", ["follower_id", "follower_type"], name: "fk_follows"
 
   create_table "invites", force: :cascade do |t|
     t.string   "email"
@@ -116,6 +129,13 @@ ActiveRecord::Schema.define(version: 20160202092944) do
   end
 
   add_index "propertyships", ["list_id", "property_id"], name: "index_propertyships_on_list_id_and_property_id"
+
+  create_table "search_suggestions", force: :cascade do |t|
+    t.string   "term"
+    t.integer  "popularity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "user_name"
