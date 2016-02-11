@@ -10,4 +10,10 @@ class Property < ActiveRecord::Base
   geocoded_by :street_address
   after_validation :geocode
 
+
+  def self.search(term)
+    where("street_address like :term", term: "%#{term}%")
+  end
+
+
 end

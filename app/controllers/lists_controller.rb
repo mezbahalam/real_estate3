@@ -4,7 +4,10 @@ class ListsController < ApplicationController
   before_action :set_list, only: [:show, :edit, :update]
 
   def index
-    @lists = current_user.lists.page(params[:page]).per_page(10)
+    @member = current_user.lists
+    @lists = List.where(id: @member.ids).search(params[:search])
+                 .page(params[:page]).per_page(5)
+
   end
 
   def show

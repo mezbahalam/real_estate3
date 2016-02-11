@@ -1,0 +1,38 @@
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3"></div>
+    <div class="col-md-4">
+      <%= form_tag home_show_path ,:method => :get do %>
+          <div class="row">
+            <%= text_field_tag :search, params[:search], :autocomplete => 'on',style: "width: 70%" %>
+            <%= submit_tag "search", class: "btn btn-info" %>
+          </div>
+
+      <% end %>
+
+      <br>
+      <br>
+
+    <% if @lists.present? %>
+        <% @lists.each do |list| %>
+            <div class="bg-primary" style="padding: 10px; font-family: bold; color: black "> <%= link_to  list.name, list_path(list), class:  "bg-primary" %> </div>
+        <% end %>
+        <br>
+    <% end %>
+    <br>
+    <% if @properties.present? %>
+        <% @properties.each do |property| %>
+            <div class="bg-primary" style="padding: 20px; font-family: bold; color: black ">
+              <p class= "bg-primary">
+                <%= image_tag property.photo_url.thumb.url  %>
+                <%= link_to property.street_address,property_path(id: property.id), class:  "bg-primary" %>
+              </p>
+            </div>
+            <br>
+        <% end %>
+    <% end %>
+
+    </div>
+  </div>
+</div>

@@ -8,6 +8,9 @@ class SearchSuggestion < ActiveRecord::Base
     List.find_each do |list|
       index_term(list.name)
     end
+    Property.find_each do |list|
+      index_term(list.street_address)
+    end
 
   end
 

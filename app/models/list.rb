@@ -15,9 +15,9 @@ class List < ActiveRecord::Base
   validates_presence_of :name
 
 
-  # def self.search(term)
-  #   where("name like :term", term: "%#{term}%")
-  # end
+  def self.search(term)
+    where("name like :term", term: "%#{term}%")
+  end
 
 
 

@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
 
   get "home/index"
+  get "home/show"
   resources :search_suggestions
   root to: "activities#index"
   resources :comments, :only => [:create, :destroy]
