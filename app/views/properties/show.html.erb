@@ -23,7 +23,7 @@
       <br>
       <br>
 
-      <h5>Add to my lists</h5>
+      <h5>My lists</h5>
       <%= form_for(@property, url: add_to_list_property_path,  :method => :POST) do |f| %>
           <%= f.collection_check_boxes(:list_ids, @current_user_lists, :id, :name) %>
           <%= f.submit  "Add to list", class: "btn btn-primary custom-button" %>
@@ -41,7 +41,7 @@
       <div class="col-lg-5">
         <% if @property.present? %>
             <div style='width: 800px;'>
-              <div id="map" style='width: 300px; height: 300px;'></div>
+              <div id="map" style='width: 400px; height: 400px;'></div>
             </div>
 
             <script type = "text/javascript">
@@ -58,17 +58,6 @@
     </div>
 
       <div class="row">
-
-        <p>
-          <strong>City:</strong>
-          <%= @property.city %>
-        </p>
-
-        <p>
-          <strong>State:</strong>
-          <%= @property.state %>
-        </p>
-
 
         <p>
           <strong>Url:</strong>

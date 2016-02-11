@@ -1,33 +1,39 @@
 
-<% if user_signed_in? %>
-    <div id="follow_user">
-      <%= render :partial => "shared/follow_user", :locals => {:user => @user} %>
-    </div>
-<% end %>
+
 
 
 <div class="well">
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-2"></div>
+    <div class="col-md-1">
       <div><%= image_tag avatar_url(@user) %></div>
     </div>
-      <div class="col-md-5">
+
+      <div class="col-md-4">
         <div><%= "#{@user.first_name}" + " " + "#{@user.last_name }"%></div>
         <div><%= @user.user_name %> </div>
         <div><%= @user.location %> </div>
         <div><%= @user.bio %> </div>
-
       </div>
-    <% if is_current_user?(@user) %>
-        <div class="col-md-2">
-          <%= link_to 'Edit Profile', edit_user_registration_path , class: "btn btn-primary" %>
-        </div>
-    <% end %>
+
+
+      <div class="col-md-2">
+        <% if user_signed_in? %>
+            <div id="follow_user">
+              <%= render :partial => "shared/follow_user", :locals => {:user => @user} %>
+            </div>
+        <% end %>
+      </div>
+        <% if is_current_user?(@user) %>
+            <div class="col-md-2">
+              <%= link_to 'Edit Profile', edit_user_registration_path , class: "btn btn-primary" %>
+            </div>
+        <% end %>
     </div>
-  </div>
+
 </div>
-</div>
+
 
 
 
@@ -36,7 +42,7 @@
   <div class="row">
     <div class="col-sm-3"></div>
     <div class="col-md-6">
-      <h1>Latest Activities</h1>
+      <h2>My Activities</h2>
 
       <% @activities.each do |activity| %>
           <div class="activity">
@@ -61,7 +67,7 @@
   <div class="row">
     <div class="col-sm-3"></div>
     <div class="col-md-4">
-<h3>My Properties</h3>
+<h2>My Properties</h2>
 
 <table>
   <tbody>

@@ -1,6 +1,6 @@
 
 <% if activity.trackable %>
-    added a  <%= link_to activity.trackable_type , activity.trackable.commentable %> "<%= activity.trackable.body.truncate(10)%>"
+    added a <%= activity.trackable_type.downcase  %> <%= link_to  "'#{activity.trackable.body.truncate(20)}'" , activity.trackable.commentable %>
 <% else %>
      deleted a comment
 <% end %>

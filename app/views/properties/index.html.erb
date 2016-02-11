@@ -14,7 +14,7 @@
       <% @properties.each do |property| %>
           <div class="bg-primary" style="padding: 20px; font-family: bold; color: black ">
             <p class= "bg-primary">
-              <%= property.photo_url  %>
+              <%= image_tag property.photo_url.thumb.url  %>
               <%= link_to property.street_address,property_path(id: property.id), class:  "bg-primary" %>
             </p>
           </div>

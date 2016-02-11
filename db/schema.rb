@@ -83,11 +83,6 @@ ActiveRecord::Schema.define(version: 20160209072750) do
   add_index "lists", ["cached_votes_up"], name: "index_lists_on_cached_votes_up"
   add_index "lists", ["user_id"], name: "index_lists_on_user_id"
 
-  create_table "lists_properties", id: false, force: :cascade do |t|
-    t.integer "property_id"
-    t.integer "list_id"
-  end
-
   create_table "memberships", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "list_id"

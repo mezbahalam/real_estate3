@@ -2,7 +2,7 @@
 
 <% if activity.trackable %>
 
-    create a "<%= link_to(activity.trackable_type, activity.trackable) %>"
+    <%= image_tag activity.trackable.photo_url.thumb.url %> create a "<%= link_to(activity.trackable_type, activity.trackable) %>"
 
 <% else %>
     which has since been deleted
