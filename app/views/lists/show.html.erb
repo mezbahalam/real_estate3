@@ -65,15 +65,13 @@
       <h1>All Properties in this List</h1>
       <% @properties.each do |property| %>
           <div class="bg-primary" style="padding: 20px; font-family: bold; color: black ">
-            <p class= "bg-primary">
               <% if property.photo_url.thumb.url.present? %>
                 <td><%= image_tag property.photo_url.thumb.url.to_s, alt: "property Image" %></td>
             <% else %>
                 <td><%= image_tag "thumb_plogo.jpg" %></td>
             <% end %>
               <%= link_to property.street_address,property_path(id: property.id), class:  "bg-primary" %>
-              <%= link_to "show",property_path(id: property.id), class:  "bg-primary" %>
-            </p>
+              <%= link_to "show",property_path(id: property.id), class:  "bg-primary", style: "float: right" %>
           </div>
           <br>
       <% end %>
