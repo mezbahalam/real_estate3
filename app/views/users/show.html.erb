@@ -73,12 +73,15 @@
   <tbody>
   <% @properties.each do |property| %>
       <tr>
-
+        <% if property.photo_url.thumb.url.present? %>
+            <td><%= image_tag property.photo_url.thumb.url.to_s %></td>
+        <% else %>
+            <td><%= image_tag "thumb_plogo.jpg" %></td>
+        <% end %>
         <td><%= property.street_address %></td>
         <td><%= property.city %></td>
         <td><%= property.state %></td>
         <td><%= property.url %></td>
-        <td><%= property.photo_url %></td>
         <td><%= property.description %></td>
         <td><%= property.tags %></td>
         <td><%= property.bedroom %></td>
