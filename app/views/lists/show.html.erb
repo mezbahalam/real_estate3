@@ -72,6 +72,7 @@
                 <td><%= image_tag "thumb_plogo.jpg" %></td>
             <% end %>
               <%= link_to property.street_address,property_path(id: property.id), class:  "bg-primary" %>
+              <%= link_to "show",property_path(id: property.id), class:  "bg-primary" %>
             </p>
           </div>
           <br>
