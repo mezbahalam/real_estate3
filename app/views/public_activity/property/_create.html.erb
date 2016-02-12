@@ -2,7 +2,7 @@
 
 <% if activity.trackable %>
     <% if activity.trackable.photo_url.thumb.url.present? %>
-        <%= image_tag activity.trackable.photo_url.thumb.url.to_s %> create a "<%= link_to(activity.trackable_type, activity.trackable) %>"
+        <%= image_tag activity.trackable.photo_url.thumb.url.to_s, alt: "property Image" %> create a "<%= link_to(activity.trackable_type, activity.trackable) %>"
     <% else %>
         <%= image_tag "thumb_plogo.jpg" %> create a "<%= link_to(activity.trackable_type, activity.trackable) %>"
     <% end %>
