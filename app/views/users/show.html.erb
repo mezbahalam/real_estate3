@@ -74,7 +74,7 @@
   <% @properties.each do |property| %>
       <tr>
         <% if property.photo_url.thumb.url.present? %>
-            <td><%= image_tag property.photo_url.thumb.url.to_s %></td>
+            <td><%= image_tag property.photo_url.thumb.url.to_s, alt: "property Image" %></td>
         <% else %>
             <td><%= image_tag "thumb_plogo.jpg" %></td>
         <% end %>
