@@ -39,7 +39,11 @@
             <h4><%=   @property.street_address %> </h4>
             <div class="col-lg-4">
               <p>
-                <%= image_tag @property.photo_url_url().to_s %>
+                <% if @property.photo_url_url().present? %>
+                    <%= image_tag @property.photo_url_url().to_s %>
+                <% else %>
+                    <%= image_tag "plogo.jpg" %>
+                <% end %>
               </p>
             </div>
 
