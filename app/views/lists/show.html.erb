@@ -70,8 +70,8 @@
             <% else %>
                 <td><%= image_tag "thumb_plogo.jpg" %></td>
             <% end %>
-              <%= link_to property.street_address,property_path(id: property.id), class:  "bg-primary" %>
-              <%= link_to "show",property_path(id: property.id), class:  "bg-primary", style: "float: right" %>
+              <%= link_to property.street_address,property_path(id: property.id), class:  "bg-primary" , style: "padding-left: 50px;" %>
+              <%= link_to "show",property_path(id: property.id), class:  "bg-primary", style: "float: right;" %>
           </div>
           <br>
       <% end %>
