@@ -59,6 +59,7 @@
                           markers = handler.addMarkers(<%=raw @hash.to_json %>);
                           handler.bounds.extendWith(markers);
                           handler.fitMapToBounds();
+                          handler.getMap().setZoom(14);
                       });
                   </script>
               <% end %>
@@ -68,7 +69,7 @@
           <div class="row">
             <p>
               <strong>Url:</strong>
-              <%= @property.url %>
+              <%= link_to "#{@property.url}", @property.url %>
             </p>
 
             <p>
