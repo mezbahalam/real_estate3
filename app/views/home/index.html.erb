@@ -9,7 +9,7 @@
 <% @users.each do |user| %>
     <div class="row">
       <div class="col-md-5">
-        <p><%= image_tag avatar_url(user) %> <%=  "#{user.first_name}" + " " + "#{user.last_name }"%></p>
+        <p><%= image_tag avatar_url(user) %> <%=  "#{full_name(user)}"%></p>
       </div>
         <div id="follow_user" class="col-md-1">
           <%= render :partial => "shared/follow_user", :locals => {:user => user} %>

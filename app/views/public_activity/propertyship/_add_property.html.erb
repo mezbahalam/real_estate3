@@ -1,0 +1,9 @@
+
+
+<% if activity.trackable %>
+
+    added a "<%= link_to( "Property", property_path(activity.trackable.property_id)) %>" to  "<%= link_to( "List", list_path(activity.trackable.list_id)) %>"
+
+<% else %>
+    which has since been deleted
+<% end %>

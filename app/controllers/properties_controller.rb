@@ -98,10 +98,14 @@ class PropertiesController < ApplicationController
 
   def add_to_list
     @property = Property.find(params[:id])
-    respond_to do |format|
-      if @property.update_attributes(property_params)
-        @property.create_activity :add_to_list, owner: current_user
+    @l =  params[:property][:list_id]
 
+    respond_to do |format|
+      @propertiship = Propertyship.new
+      @propertiship.property_id = @property.id
+      @propertiship.list_id = @l
+      if @propertiship.save
+        @property.create_activity :add_to_list, owner: current_user
         format.html { redirect_to property_path(@property), notice: 'Property Added' }
       else
         format.html { redirect_to property_path(@property), notice: 'Property Not Added' }

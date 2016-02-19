@@ -23,6 +23,7 @@ group :development, :test do
   gem 'letter_opener'
   gem 'sunspot_solr'
   gem 'rack-mini-profiler' #for time
+  gem 'byebug'
 end
 
 group :production do

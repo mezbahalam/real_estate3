@@ -25,7 +25,7 @@
     <% @activities.each do |activity| %>
         <div class="activity">
           <div class="bg-primary" style="padding: 10px">
-            <h4><%= link_to( "@#{activity.owner.first_name}" , activity.owner  , class: "activity-color" ) if activity.owner%>
+            <h4><%= link_to( "@#{activity.owner.first_name}" , activity.owner  , class: "activity-color" ) if activity.owner%><span  class= "activity-color" style="float: right; font-size: .7em" > <%= "  #{ time_ago_in_words(activity.created_at)}" + " ago" %></span>
             <p class= "activity-color"><%= render_activity activity  %></p></h4>
           </div>
         </div>

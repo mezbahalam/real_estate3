@@ -11,11 +11,11 @@ class ListsController < ApplicationController
   end
 
   def show
+    #byebug
     @invite = @list.invites.build
     @members = @list.user_ids
     @property_in_system = Property.where(:owner_id => current_user.id)
-
-    @user_all_properties = Property.order("created_at desc").where(:owner_id => @members)
+    @all_properties = Property.all
     @list = List.find(params[:id])
     @properties = @list.properties
     @hash = Gmaps4rails.build_markers(@properties) do |user, marker|
@@ -93,10 +93,13 @@ class ListsController < ApplicationController
     @mee = current_user.id
 
     if @mee.in?(@members)
+      @l =  params[:list][:property_id]
       respond_to do |format|
-        if  @list.update(list_params)
-          @list.save
-          @list.create_activity :add_property, owner: current_user
+        @propertiship = Propertyship.new
+        @propertiship.list_id = @list.id
+        @propertiship.property_id = @l
+        if @propertiship.save
+          @propertiship.create_activity :add_property, owner: current_user
 
           format.html { redirect_to list_path(@list), notice: 'Property Added' }
         else
@@ -118,7 +121,7 @@ class ListsController < ApplicationController
   end
 
   def list_params
-    params.require(:list).permit(:name, :user_id, property_ids: [])
+    params.require(:list).permit(:name, :user_id, :property_ids => [])
   end
 
   def invite_params

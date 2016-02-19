@@ -27,8 +27,10 @@
           <div style="width: 80%">
             <h5>My lists</h5>
             <%= form_for(@property, url: add_to_list_property_path,  :method => :POST) do |f| %>
-                <%= f.collection_check_boxes(:list_ids, @current_user_lists, :id, :name) %>
+                <div>
+                <%= f.collection_select(:list_id, @current_user_lists, :id, :name,{:prompt=>true}, {class: "form-control custom-button"})  %>
                 <%= f.submit  "Add to list", class: "btn btn-primary custom-button" %>
+                </div>
             <% end %>
           </div>
         </div>

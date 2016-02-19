@@ -16,18 +16,12 @@
 <br>
 <br>
       <div>
-      <% if @properties.present? %>
+      <% if @all_properties.present? %>
           <%= form_for(@list, url: add_property_list_path,  :method => :put) do |f| %>
-              <%= f.submit "Add Property", class: "btn btn-primary" %>
               <div>
-                <%= f.collection_check_boxes(:property_ids, @user_all_properties, :id, :street_address) %>
+                <%= f.collection_select(:property_id, Property.all, :id, :street_address, {:prompt=>true}, {class: "form-control custom-button"} ) %>
               </div>
-              <p><%#= f.collection_check_boxes(:property_ids, @members_properties, :id, :street_address) %></p>
-
-
-              <p><%# f.association(:property_ids, @user_all_properties, :id, :street_address) %></p>
-              <%#= f.collection_select :property_id,  @user_all_properties,:id,:street_address, include_blank: true  %>
-              <%#= f.select :property_id, options_for_select(@user_all_properties.map{|s|[s.street_address, s.id]}) %>
+              <%= f.submit "Add Property", class: "btn btn-primary  custom-button" %>
           <% end %>
       <% else %>
           <%= link_to "Add new property",new_property_path %>
