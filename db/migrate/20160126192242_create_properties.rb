@@ -9,7 +9,6 @@ class CreateProperties < ActiveRecord::Migration
       t.string :url
       t.string :photo_url
       t.text :description
-      t.string :tags
       t.integer :bedroom
       t.integer :bathroom
       t.float :price

@@ -23,6 +23,9 @@ class PropertiesController < ApplicationController
 
     end
 
+    @tags_ids = @property.tag_list
+
+    @tags = ActsAsTaggableOn::Tag.where(:id => @tags_ids)
 
     @comments = @property.comment_threads.order('created_at desc')
     @new_comment = Comment.build_from(@property, current_user.id, "")
@@ -32,12 +35,13 @@ class PropertiesController < ApplicationController
 
 
   def new
-
     @property = Property.new
   end
 
 
   def edit
+    @tags_ids = @property.tag_list
+    @tags = ActsAsTaggableOn::Tag.where(:id => @tags_ids)
   end
 
 
@@ -113,10 +117,26 @@ class PropertiesController < ApplicationController
     end
   end
 
+
+
+    def tags
+      query = params[:q]
+      if query[-1,1] == " "
+        query = query.gsub(" ", "")
+        ActsAsTaggableOn::Tag.find_or_create_with_like_by_name(query)
+      end
+
+      @tags = ActsAsTaggableOn::Tag.where("tags.name LIKE ?", "%#{query}%")
+      respond_to do |format|
+        format.json { render :json => @tags.map{|t| {:id => t.name, :name => t.name }}}
+      end
+    end
+
+
   private
 
     def property_params
-      params.require(:property).permit(:street_address, :city, :state, :lat, :lon, :url, :photo_url, :description, :tags, :bedroom, :bathroom, :price, :status,:remote_photo_url_url, :list_ids => [])
+      params.require(:property).permit(:tag_list ,:street_address, :city, :state, :lat, :lon, :url, :photo_url, :description, :tags, :bedroom, :bathroom, :price, :status,:remote_photo_url_url, :list_ids => [])
     end
 
     def authenticate_owner

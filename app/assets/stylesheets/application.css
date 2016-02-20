@@ -12,6 +12,9 @@
  *
  *= require font-awesome
  *= require jquery-ui
+ *= require token-input-facebook
+ *= require token-input-mac
+ *= require token-input
  *= require_tree .
  *= require_self
  */

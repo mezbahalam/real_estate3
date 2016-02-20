@@ -18,7 +18,7 @@
 //= require gmaps-auto-complete
 //= require turbolinks
 //= require bootstrap
-
+//= require jquery.tokeninput
 //= require_tree .
 
 

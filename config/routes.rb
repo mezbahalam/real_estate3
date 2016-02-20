@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-
+  get "properties/tags" => "properties#tags", :as => :tags
   get "home/index"
   get "home/show"
   resources :search_suggestions
