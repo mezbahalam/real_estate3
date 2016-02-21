@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  serialize :avatars, Array
+  mount_uploaders :avatars, ImageUploader
   # Include default devise modules. Others available are:
   # :lockable, :timeoutable and :omniauthable
   devise  :database_authenticatable, :registerable,

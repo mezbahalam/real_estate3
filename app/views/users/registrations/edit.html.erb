@@ -21,6 +21,7 @@
     <%= f.input :last_name, :placeholder => "Last Name"  %>
     <%= f.input :password, autocomplete: "off", :placeholder => "change password", required: false %>
     <%= f.input :password_confirmation,:placeholder => "confirm password", required: false %>
+    <%= f.input :avatars, as: :file, label: :image , :input_html => {multiple: true, accept: "image/jpeg, image/jpg, image/gif, image/png"} %>
     <%= f.input :bio, :placeholder => "Bio"  %>
     <%= f.input :location, :placeholder => "Location"  %>
 

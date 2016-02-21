@@ -7,10 +7,16 @@
   <div class="row">
     <div class="col-md-2"></div>
     <div class="col-md-1">
-      <div><%= image_tag avatar_url(@user) %></div>
+      <div>
+        <% if @user.avatars.present? %>
+            <%= image_tag @user.avatars[0], size: "100x100"  %>
+        <% else %>
+            <%= image_tag avatar_url(@user), size: "100x100" %>
+        <% end %>
+      </div>
     </div>
 
-      <div class="col-md-4">
+      <div class="col-md-4" style="margin-left: 2%">
         <div><%= "#{@user.first_name}" + " " + "#{@user.last_name }"%></div>
         <div><%= @user.user_name %> </div>
         <div><%= @user.location %> </div>
@@ -79,15 +85,10 @@
             <td><%= image_tag "thumb_plogo.jpg" %></td>
         <% end %>
         <td><%= property.street_address %></td>
-        <td><%= property.city %></td>
-        <td><%= property.state %></td>
-        <td><%= property.url %></td>
         <td><%= property.description %></td>
-        <td><%= property.tags %></td>
         <td><%= property.bedroom %></td>
         <td><%= property.bathroom %></td>
         <td><%= property.price %></td>
-        <td><%= property.status %></td>
         <td><%=  link_to "show", property_path(:id => property.id) %></td>
 
       </tr>

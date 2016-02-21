@@ -18,6 +18,8 @@
     <%= f.input :email, required: true, autofocus: true,  :placeholder => "Email"  %>
     <%= f.input :password, required: true, :placeholder => "Password"  %>
     <%= f.input :password_confirmation, required: true, :placeholder => "Password Confirmation"  %>
+    <%= f.input :avatars, as: :file, label: :image , :input_html => {multiple: true, accept: "image/jpeg, image/jpg, image/gif, image/png"} %>
+
   </div>
 
   <div class="form-actions">
