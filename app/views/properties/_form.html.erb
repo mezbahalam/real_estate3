@@ -7,7 +7,7 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/assets/gmaps.js"></script>
 <script type="text/javascript" src="/assets/jquery.tokeninput.js"></script>
-
+<script type="text/javascript" src="/assets/jquery.tagsinput.js"></script>
 <script  type="text/javascript" >
 
     jQuery(function() {
@@ -36,6 +36,10 @@
     });
 </script>
 
+<script>
+    $(function() { $('#tags').tagsInput(); });
+</script>
+
 <div class="container ">
 
 <div style="width: 30%" >
@@ -54,8 +58,9 @@
     <%= f.input :state, as: :hidden  %>
     <%= f.input :latitude,  as: :hidden  %>
     <%= f.input :longitude,  as: :hidden %>
-    <%= f.input :url,:placeholder => "Property Url" %>
-    <%= f.input :remote_photo_url_url, :placeholder => "Photo Url" %>
+    <%= f.input :url,:placeholder => "Property Url", :input_html => { id: "tags" } %>
+    <%= f.input :remote_photo_url_url, :placeholder => "Image Url" %>
+    <%= f.input :pictures, as: :file,:label => "Images", :placeholder => "Photo Url", :input_html => { multiple: true, accept: "image/jpeg, image/jpg, image/gif, image/png" } %>
     <%= f.input :bedroom ,:placeholder => "Beds" %>
     <%= f.input :bathroom , :placeholder => "Baths" %>
     <%= f.input :price, :placeholder => "Add Price" %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160220152862) do
+ActiveRecord::Schema.define(version: 20160221070409) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "trackable_id"
@@ -92,28 +92,8 @@ ActiveRecord::Schema.define(version: 20160220152862) do
 
   add_index "memberships", ["user_id", "list_id"], name: "index_memberships_on_user_id_and_list_id"
 
-  create_table "properties", force: :cascade do |t|
-    t.string   "street_address"
-    t.string   "city"
-    t.string   "state"
-    t.float    "latitude"
-    t.float    "longitude"
-    t.string   "url"
-    t.string   "photo_url"
-    t.text     "description"
-    t.integer  "bedroom"
-    t.integer  "bathroom"
-    t.float    "price"
-    t.string   "status"
-    t.integer  "list_id"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-    t.integer  "owner_id"
-    t.integer  "cached_votes_up", default: 0
-  end
-
-  add_index "properties", ["cached_votes_up"], name: "index_properties_on_cached_votes_up"
-  add_index "properties", ["list_id"], name: "index_properties_on_list_id"
+# Could not dump table "properties" because of following NoMethodError
+#   undefined method `[]' for nil:NilClass
 
   create_table "propertyships", force: :cascade do |t|
     t.integer  "property_id"

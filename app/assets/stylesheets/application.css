@@ -15,6 +15,7 @@
  *= require token-input-facebook
  *= require token-input-mac
  *= require token-input
+ *= require jquery.tagsinput
  *= require_tree .
  *= require_self
  */

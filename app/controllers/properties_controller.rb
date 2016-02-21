@@ -136,7 +136,7 @@ class PropertiesController < ApplicationController
   private
 
     def property_params
-      params.require(:property).permit(:tag_list ,:street_address, :city, :state, :lat, :lon, :url, :photo_url, :description, :tags, :bedroom, :bathroom, :price, :status,:remote_photo_url_url, :list_ids => [])
+      params.require(:property).permit(:tag_list ,:street_address, :city, :state, :lat, :lon, :url , :photo_url, :description, :tags, :bedroom, :bathroom, :price, :status,:remote_photo_url_url,{:list_ids => []}, pictures: [])
     end
 
     def authenticate_owner
